@@ -18,9 +18,9 @@ void lcd_init(void)
 void lcd_cmd(uint8_t cmd)
 {
     i2c_start();                        // I2C Start Condition
-    i2c_send(ST7032_ADRES);             // LCD Device Address
-    i2c_send(0x00);                     // Set Command Mode
-    i2c_send(cmd);                      // Output Command
+    i2c_write(LCD_I2C_ADDR);            // LCD Device Address
+    i2c_write(0x00);                    // Set Command Mode
+    i2c_write(cmd);                     // Output Command
     i2c_stop();                         // I2C Stop Condition
     
     /* Clear or Home */
@@ -34,12 +34,12 @@ void lcd_cmd(uint8_t cmd)
     }
 }
 
-void lcd_putch(uint8_t data)
+void lcd_putc(uint8_t data)
 {
     i2c_start();                        // I2C Start Condition
-    i2c_send(ST7032_ADRES);             // LCD Device Address
-    i2c_send(0x40);                     // Set Data Mode
-    i2c_send(data);                     // Output Data
+    i2c_write(LCD_I2C_ADDR);            // LCD Device Address
+    i2c_write(0x40);                    // Set Data Mode
+    i2c_write(data);                    // Output Data
     i2c_stop();                         // I2C Stop Condition
     __delay_us(30);                     // Wait 30usec
 }
@@ -48,7 +48,7 @@ void lcd_puts(const uint8_t *ptr)
 {
     while(*ptr != 0)                    // Get a Charctor
     {
-        lcd_putch(*ptr++);              // Display a Charctor and Increment Pointer
+        lcd_putc(*ptr++);               // Display a Charctor and Increment Pointer
     }
 }
 

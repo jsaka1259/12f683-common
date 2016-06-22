@@ -10,8 +10,8 @@
 
 extern void i2c_start(void);
 extern void i2c_stop(void);
-extern uint8_t i2c_send(uint8_t);
-extern uint8_t i2c_recv(uint8_t);
+extern uint8_t i2c_write(uint8_t);
+extern uint8_t i2c_read(uint8_t);
 
 #endif	/* I2C_H */
 

@@ -45,7 +45,7 @@ void rs_putc(uint8_t code)
 }
 
 /* Receive 1 Byte */
-uint8_t rs_getc(void)
+void rs_getc(uint8_t* code)
 {
     while(RXPIN);               // Waite START Bit
     bCnt = 0;                   // Initialize Bit Counter
@@ -98,52 +98,51 @@ uint8_t rs_getc(void)
     
     if(bCnt == 10)
     {
-        return(dat);            // Return Valid Data
+        *code = dat;            // Return Valid Data
     }
     else
     {
-        return(0xFF);           // Return Error Flag
+        *code = 0xFF;           // Return Error Flag
     }
 }
 
 /* Send String */
-void rs_puts(uint8_t *buff)
+void rs_puts(uint8_t* buf)
 {
-    while(*buff)
+    while(*buf)
     {
-        rs_putc(*buff++);
+        rs_putc(*buf++);
     }
 }
 
 /* Receive String */
-void rs_gets(uint8_t *buff)
+void rs_gets(uint8_t* buf)
 {
-    uint8_t *p, chr;
+    uint8_t ch;
+    uint8_t i = 0;
     
-    p = buff;
     while(1)
     {
-        chr = rs_getc();
-        if(chr == 0xFF)
+        rs_getc(&ch);
+        if((ch == 0x0A) || (ch == 0x0D))
         {
-            buff[0] = 'E';
-            buff[1] = 'R';
-            buff[2] = 'R';
-            buff[3] = 0x00;
+            buf[i] = 0x00;
+            rs_crlf();
             break;
         }
-        if(chr != 0x0d && chr != 0x0a)
+        else if((i > 0) && (ch == 0x08))
         {
-            *p++ = chr;
+            rs_puts("\b \b");
+            i--;
         }
-        if(chr == 0x0d)
+        else if((ch >= 0x20) && (ch <= 0x7E))
         {
-            *p = 0x00;
+            buf[i++] = (uint8_t)ch;
+            rs_putc(ch);
         }
-        if(chr == 0x0a)
+        else
         {
-            *p = 0x00;
-            break;
+            rs_putc(0x07);
         }
     }
 }

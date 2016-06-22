@@ -11,7 +11,7 @@
 #pragma config IESO  = OFF      // Internal External Switchover bit (Internal External Switchover mode is disabled)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enabled bit (Fail-Safe Clock Monitor is disabled)
 
-void common_init()
+void common_init(void)
 {
     OSCCON = 0x70;              // OSC 8MHz
     GPIO   = 0x00;              // GPIO default Low
