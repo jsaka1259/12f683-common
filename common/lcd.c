@@ -78,6 +78,7 @@ void lcd_crlf(void)
 void lcd_clear(void)
 {
     lcd_cmd(0x01);                      // Clear Display
+    lcd_line = 0x80;
 }
 
 void delay_100ms(uint16_t time)
