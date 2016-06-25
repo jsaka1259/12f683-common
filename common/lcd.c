@@ -1,6 +1,5 @@
 #include <common.h>
 
-static void lcd_crlf(void);
 static uint8_t lcd_line = 0x80;
 
 void lcd_init(void)
@@ -63,7 +62,7 @@ void lcd_puts(const uint8_t* buf)
     }
 }
 
-static void lcd_crlf(void)
+void lcd_crlf(void)
 {
     if(lcd_line == 0x80)
     {
