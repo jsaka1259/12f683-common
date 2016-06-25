@@ -1,5 +1,8 @@
 #include <common.h>
 
+static void lcd_crlf(void);
+static uint8_t lcd_line = 0x80;
+
 void lcd_init(void)
 {
     delay_100ms(1);
@@ -44,12 +47,33 @@ void lcd_putc(uint8_t data)
     __delay_us(30);                     // Wait 30usec
 }
 
-void lcd_puts(const uint8_t *ptr)
+void lcd_puts(const uint8_t* buf)
 {
-    while(*ptr != 0)                    // Get a Charctor
+    uint8_t i = 0;
+    
+    lcd_cmd(lcd_line);
+    while(buf[i] != 0x00)
     {
-        lcd_putc(*ptr++);               // Display a Charctor and Increment Pointer
+        if(i >= LCD_MAX_COLUMN)
+        {
+            break;
+        }
+        lcd_putc(buf[i]);
+        i++;
     }
+}
+
+static void lcd_crlf(void)
+{
+    if(lcd_line == 0x80)
+    {
+        lcd_line = 0xC0;
+    }
+    else
+    {
+        lcd_line = 0x80;
+    }
+    lcd_cmd(lcd_line);
 }
 
 void lcd_clear(void)

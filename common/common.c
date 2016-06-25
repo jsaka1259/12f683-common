@@ -23,6 +23,9 @@ void common_init(void)
     
     lcd_init();
     rs232c_ini();
+    
     PEIE = 1;
     GIE  = 1;
+    
+    __delay_us(500);
 }

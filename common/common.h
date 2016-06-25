@@ -28,10 +28,14 @@
 #define RXPIN    GP5
 
 /* LCD */
-#define LCD_I2C_ADDR 0x7C       // LCD I2C Address
+#define LCD_I2C_ADDR   0x7C     // LCD I2C Address
+#define LCD_MAX_LINE   2        // LCD Max Line
+#define LCD_MAX_COLUMN 8        // LCD Max Column
 
 /* EEPROM */
-#define EEPROM_I2C_ADDR 0x50    // EEPROM I2C Address
+#define EEPROM_I2C_ADDR   0x50    // EEPROM I2C Address
+#define EEPROM_ADDR_MAX   0xFFFF  // EEPROM CAPACITY
+#define EEPROM_DATA_MAX   0xFF    // EEPROM Data Width
 
 extern void common_init();
 
