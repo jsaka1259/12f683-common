@@ -107,7 +107,7 @@ void rs_getc(uint8_t* code)
 }
 
 /* Send String */
-void rs_puts(uint8_t* buf)
+void rs_puts(uint8_t *buf)
 {
     while(*buf)
     {

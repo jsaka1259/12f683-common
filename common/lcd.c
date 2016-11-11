@@ -10,7 +10,7 @@ void lcd_init(void)
     lcd_cmd(0x14);                      // OSC 183Hz BIAS 1/5
     lcd_cmd(0x70 + (CONTRAST & 0x0F));  // CONTRAST
     lcd_cmd(0x50 + (CONTRAST >> 4));    // CONTRAST
-    lcd_cmd(0x6C);                      // Follower for 3.3V
+    lcd_cmd(0x6A);                      // Follower for 5V
     delay_100ms(3);
     lcd_cmd(0x38);                      // Set Normal mode
     lcd_cmd(0x0C);                      // Display On
@@ -37,7 +37,7 @@ void lcd_cmd(uint8_t cmd)
 }
 
 void lcd_putc(uint8_t data)
-{
+{    
     i2c_start();                        // I2C Start Condition
     i2c_write(LCD_I2C_ADDR);            // LCD Device Address
     i2c_write(0x40);                    // Set Data Mode
@@ -57,8 +57,7 @@ void lcd_puts(const uint8_t* buf)
         {
             break;
         }
-        lcd_putc(buf[i]);
-        i++;
+        lcd_putc(buf[i++]);
     }
 }
 

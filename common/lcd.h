@@ -1,7 +1,7 @@
 #ifndef LCD_H
 #define	LCD_H
 
-#define CONTRAST 0x60           // CONTRAST
+#define CONTRAST 0x18           // CONTRAST
 
 extern void lcd_init(void);
 extern void lcd_cmd(uint8_t);

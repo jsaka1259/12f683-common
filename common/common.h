@@ -2,9 +2,11 @@
 #define	COMMON_H
 
 #include <xc.h>
+#include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdarg.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "i2c.h"
 #include "lcd.h"
@@ -38,5 +40,7 @@
 #define EEPROM_DATA_MAX   0xFF    // EEPROM Data Width
 
 extern void common_init();
+extern uint8_t* common_format(uint8_t*, const uint8_t*, ...);
+extern uint32_t strtoh(uint8_t*);
 
 #endif	/* COMMON_H */
