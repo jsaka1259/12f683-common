@@ -1,6 +1,9 @@
 #include <common.h>
 
-static uint8_t lcd_line = 0x80;
+/* LCD */
+#define LCD_I2C_ADDR 0x7C               // LCD I2C Address
+//#define LCD_CONTRAST 0x18               // for 5V
+#define LCD_CONTRAST 0x30               // for 3.3V
 
 void lcd_init(void)
 {
@@ -8,9 +11,10 @@ void lcd_init(void)
     lcd_cmd(0x38);                      // 8bit 2line Noraml mode
     lcd_cmd(0x39);                      // 8bit 2line Extend mode
     lcd_cmd(0x14);                      // OSC 183Hz BIAS 1/5
-    lcd_cmd(0x70 + (CONTRAST & 0x0F));  // CONTRAST
-    lcd_cmd(0x50 + (CONTRAST >> 4));    // CONTRAST
-    lcd_cmd(0x6A);                      // Follower for 5V
+    lcd_cmd(0x70 + (LCD_CONTRAST & 0x0F)); // CONTRAST
+    lcd_cmd(0x5C + (LCD_CONTRAST >> 4));   // CONTRAST
+//  lcd_cmd(0x6A);                      // Follower for 5V
+    lcd_cmd(0x6B);                      // Follower for 3.3V
     delay_100ms(3);
     lcd_cmd(0x38);                      // Set Normal mode
     lcd_cmd(0x0C);                      // Display On
@@ -50,34 +54,15 @@ void lcd_puts(const uint8_t* buf)
 {
     uint8_t i = 0;
     
-    lcd_cmd(lcd_line);
     while(buf[i] != 0x00)
     {
-        if(i >= LCD_MAX_COLUMN)
-        {
-            break;
-        }
         lcd_putc(buf[i++]);
     }
-}
-
-void lcd_crlf(void)
-{
-    if(lcd_line == 0x80)
-    {
-        lcd_line = 0xC0;
-    }
-    else
-    {
-        lcd_line = 0x80;
-    }
-    lcd_cmd(lcd_line);
 }
 
 void lcd_clear(void)
 {
     lcd_cmd(0x01);                      // Clear Display
-    lcd_line = 0x80;
 }
 
 void delay_100ms(uint16_t time)

@@ -1,11 +1,17 @@
 #include <common.h>
 
+#define DTIME    10             // Detect Delay Time
+#define BAUDRATE 9600           // Baudrate
+#define BAUD     ((unsigned char)(((_XTAL_FREQ / 16) / BAUDRATE) - 1)) //((_XTAL_FREQ/BAUDRATE)/16-1)
+#define TXPIN    GP4
+#define RXPIN    GP5
+
 static volatile uint8_t dat;
 static volatile uint8_t bCnt;
 static volatile uint8_t bPos;
 
 /* Initialize RS232C */
-void rs232c_ini(void)
+void uart_init(void)
 {
     T2CON  = 0x01;              // 1/4 Pre, 1/1 Post
     TMR2IF = 0;                 // Clear Interrupt Flag
@@ -13,7 +19,7 @@ void rs232c_ini(void)
 }
 
 /* Send 1 Byte */
-void rs_putc(uint8_t code)
+void uart_putc(uint8_t code)
 {
     dat  = code;                // Set Send Data
     bCnt = 0;                   // Initialize Bit Counter
@@ -44,8 +50,17 @@ void rs_putc(uint8_t code)
     }
 }
 
+/* Send String */
+void uart_puts(uint8_t *buf)
+{
+    while(*buf)
+    {
+        uart_putc(*buf++);
+    }
+}
+
 /* Receive 1 Byte */
-void rs_getc(uint8_t* code)
+uint8_t uart_getc(void)
 {
     while(RXPIN);               // Waite START Bit
     bCnt = 0;                   // Initialize Bit Counter
@@ -59,8 +74,7 @@ void rs_getc(uint8_t* code)
     
     while(bCnt < 10)            // Wait Receive Complate
     {
-        while(!TMR2IF)          // Wait TMR2 Interrupt
-            ;
+        while(!TMR2IF);         // Wait TMR2 Interrupt
         TMR2IF = 0;
         switch(bCnt)
         {
@@ -98,57 +112,10 @@ void rs_getc(uint8_t* code)
     
     if(bCnt == 10)
     {
-        *code = dat;            // Return Valid Data
+        return dat;             // Return Valid Data
     }
     else
     {
-        *code = 0xFF;           // Return Error Flag
+        return 0xFF;            // Return Error Flag
     }
-}
-
-/* Send String */
-void rs_puts(uint8_t *buf)
-{
-    while(*buf)
-    {
-        rs_putc(*buf++);
-    }
-}
-
-/* Receive String */
-void rs_gets(uint8_t* buf)
-{
-    uint8_t ch;
-    uint8_t i = 0;
-    
-    while(1)
-    {
-        rs_getc(&ch);
-        if((ch == 0x0A) || (ch == 0x0D))
-        {
-            buf[i] = 0x00;
-            rs_crlf();
-            break;
-        }
-        else if((i > 0) && (ch == 0x08))
-        {
-            rs_puts("\b \b");
-            i--;
-        }
-        else if((ch >= 0x20) && (ch <= 0x7E))
-        {
-            buf[i++] = (uint8_t)ch;
-            rs_putc(ch);
-        }
-        else
-        {
-            rs_putc(0x07);
-        }
-    }
-}
-
-/* Send CRLF */
-void rs_crlf(void)
-{
-    rs_puts("\r\n");
 }

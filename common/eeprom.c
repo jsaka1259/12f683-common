@@ -1,5 +1,10 @@
 #include <common.h>
 
+/* EEPROM */
+#define EEPROM_I2C_ADDR   0x50    // EEPROM I2C Address
+#define EEPROM_ADDR_MAX   0xFFFF  // EEPROM CAPACITY
+#define EEPROM_DATA_MAX   0xFF    // EEPROM Data Width
+
 void eeprom_i2c_write(uint16_t addr, uint8_t data)
 {
     i2c_start();

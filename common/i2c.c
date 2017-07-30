@@ -1,5 +1,10 @@
 #include <common.h>
 
+/* I2C */
+#define SDA     GP5
+#define SCL     GP4
+#define TRISSDA TRISIO5
+
 void i2c_start(void)
 {
     SDA = 0;                            // SDA Low
