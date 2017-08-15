@@ -2,7 +2,7 @@
 
 #define DTIME    10             // Detect Delay Time
 #define BAUDRATE 9600           // Baudrate
-#define BAUD     ((unsigned char)(((_XTAL_FREQ / 16) / BAUDRATE) - 1)) //((_XTAL_FREQ/BAUDRATE)/16-1)
+#define BAUD     (uint8_t)(((_XTAL_FREQ / BAUDRATE) / 16) - 1)
 #define TXPIN    GP4
 #define RXPIN    GP5
 
