@@ -38,10 +38,10 @@ void spi_out(unsigned char data)
     }
 }
 
-unsigned char spi_rcv(void)
+uint8_t spi_rcv(void)
 {
-    int i;
-    unsigned char BitPos, data;
+    uint8_t i;
+    uint8_t BitPos, data;
     
     data = 0;
     BitPos = 0x80;
@@ -58,10 +58,10 @@ unsigned char spi_rcv(void)
     return (data);
 }
 
-unsigned int spi_rcv16(void)
+uint8_t spi_rcv16(void)
 {
-    int i;
-    unsigned int BitPos, data;
+    uint8_t i;
+    uint8_t BitPos, data;
     
     data = 0;
     BitPos = 0x8000;
