@@ -11,7 +11,6 @@
 #include "i2c.h"
 #include "spi.h"
 #include "st7032i.h"
-#include "adt7410.h"
 #include "eeprom.h"
 #include "uart.h"
 #include "utils.h"
