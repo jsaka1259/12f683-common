@@ -7,4 +7,4 @@ extern void spi_out(unsigned char data);
 extern uint8_t spi_rcv(void);
 extern uint8_t spi_rcv16(void);
 
-#endif	/* SPI_H */
+#endif /* SPI_H */

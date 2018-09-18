@@ -20,4 +20,4 @@
 #define _XTAL_FREQ 8000000
 #endif
 
-#endif	/* COMMON_H */
+#endif /* COMMON_H */
