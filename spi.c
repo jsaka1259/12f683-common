@@ -10,15 +10,15 @@ void spi_start(void)
     CS = 0;
 }
 
-void spi_end(void)
+void spi_stop(void)
 {
     CS = 1;
 }
 
-void spi_out(unsigned char data)
+void spi_write(unsigned char data)
 {
-    int i;
-    unsigned char BitPos;
+    uint8_t i;
+    uint8_t BitPos;
     /* Data Out */
     BitPos = 0x80;
     for(i = 0; i < 8; i++)
@@ -38,7 +38,7 @@ void spi_out(unsigned char data)
     }
 }
 
-uint8_t spi_rcv(void)
+uint8_t spi_read(void)
 {
     uint8_t i;
     uint8_t BitPos, data;
@@ -58,10 +58,10 @@ uint8_t spi_rcv(void)
     return (data);
 }
 
-uint8_t spi_rcv16(void)
+uint16_t spi_rcv16(void)
 {
-    uint8_t i;
-    uint8_t BitPos, data;
+    uint8_t  i;
+    uint16_t BitPos, data;
     
     data = 0;
     BitPos = 0x8000;
