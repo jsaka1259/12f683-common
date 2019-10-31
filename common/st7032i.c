@@ -1,5 +1,32 @@
 #include "st7032i.h"
 
+static void delay_100ms(uint16_t time) {
+  time *= 4;
+
+  while(time) {
+    __delay_ms(25);
+    time--;
+  }
+}
+
+void st7032i_cmd(uint8_t cmd) {
+  // I2C Start Condition
+  i2c_start();
+  // ST7032I Device Address
+  i2c_write(ST7032I_I2C_ADDR);
+  // Set Command Mode
+  i2c_write(0x00);
+  // Output Command
+  i2c_write(cmd);
+  // I2C Stop Condition
+  i2c_stop();
+  /* Clear or Home */
+  if((cmd == 0x01) || (cmd == 0x02))
+    __delay_us(2);
+  else
+    __delay_us(30);
+}
+
 void st7032i_init(void) {
   delay_100ms(1);
   // 8bit 2line Noraml mode
@@ -25,24 +52,6 @@ void st7032i_init(void) {
   st7032i_cmd(0x0C);
   // Clear Display
   st7032i_cmd(0x01);
-}
-
-void st7032i_cmd(uint8_t cmd) {
-  // I2C Start Condition
-  i2c_start();
-  // ST7032I Device Address
-  i2c_write(ST7032I_I2C_ADDR);
-  // Set Command Mode
-  i2c_write(0x00);
-  // Output Command
-  i2c_write(cmd);
-  // I2C Stop Condition
-  i2c_stop();
-  /* Clear or Home */
-  if((cmd == 0x01) || (cmd == 0x02))
-    __delay_us(2);
-  else
-    __delay_us(30);
 }
 
 void st7032i_putc(const uint8_t data) {

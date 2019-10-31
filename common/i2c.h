@@ -4,6 +4,8 @@
 #include <xc.h>
 #include <stdint.h>
 
+#include "common.h"
+
 #define SDA     GP5
 #define SCL     GP4
 #define TRISSDA TRISIO5
