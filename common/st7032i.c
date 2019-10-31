@@ -43,7 +43,7 @@ void st7032i_init(void) {
   st7032i_cmd(0x6A);
 #else
   // Follower for 3.3V
-  st7032i_cmd(0x6B);
+  st7032i_cmd(0x6C);
 #endif
   delay_100ms(3);
   // Set Normal mode
