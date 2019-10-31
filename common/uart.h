@@ -15,7 +15,7 @@
 #define RXPIN GP5
 
 extern void uart_init(void);
-extern void uart_putc(uint8_t code);
+extern void uart_putc(uint8_t c);
 extern void uart_puts(uint8_t *buf);
 extern uint8_t uart_getc(void);
 

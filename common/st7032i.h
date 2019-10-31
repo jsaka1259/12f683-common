@@ -22,8 +22,8 @@
 
 extern void st7032i_cmd(uint8_t cmd);
 extern void st7032i_init(void);
-extern void st7032i_putc(const uint8_t data);
-extern void st7032i_puts(const uint8_t *buf);
+extern void st7032i_putc(const char c);
+extern void st7032i_puts(const char *buf);
 extern void st7032i_clear(void);
 
 #endif

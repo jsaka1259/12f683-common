@@ -54,7 +54,7 @@ void st7032i_init(void) {
   st7032i_cmd(0x01);
 }
 
-void st7032i_putc(const uint8_t data) {
+void st7032i_putc(const char c) {
   // I2C Start Condition
   i2c_start();
   // ST7032I Device Address
@@ -62,13 +62,13 @@ void st7032i_putc(const uint8_t data) {
   // Set Data Mode
   i2c_write(0x40);
   // Output Data
-  i2c_write(data);
+  i2c_write(c);
   // I2C Stop Condition
   i2c_stop();
   __delay_us(30);
 }
 
-void st7032i_puts(const uint8_t* buf) {
+void st7032i_puts(const char *buf) {
   uint8_t i = 0;
 
   while(buf[i] != 0x00)

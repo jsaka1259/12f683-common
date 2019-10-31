@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-extern uint16_t itostring(uint8_t digit, uint8_t* buf);
+extern char *itos(char *buf, uint16_t val, uint8_t dig, char pad);
 
 #endif

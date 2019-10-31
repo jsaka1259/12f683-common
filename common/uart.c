@@ -1,9 +1,5 @@
 #include "uart.h"
 
-static volatile uint8_t data;
-static volatile uint8_t bit_cnt;
-static volatile uint8_t bit_pos;
-
 void uart_init(void) {
   // 1/4 Pre, 1/1 Post
   T2CON = 0x01;
@@ -12,12 +8,9 @@ void uart_init(void) {
   TXPIN  = 1;
 }
 
-void uart_putc(uint8_t code) {
-  data = code;
-
-  // Initialize Bit Counter
-  bit_cnt = 0;
-  bit_pos = 0x01;
+void uart_putc(char c) {
+  uint8_t bit_cnt = 0;
+  uint8_t bit_pos = 0x01;
 
   // Set Baudrate
   PR2 = BAUD;
@@ -40,7 +33,7 @@ void uart_putc(uint8_t code) {
     // 1-8bit
     if(bit_cnt > 0 && bit_cnt < 9) {
       // Output Data Bit
-      TXPIN = (data & bit_pos) ? 1: 0;
+      TXPIN = (c & bit_pos) ? 1 : 0;
       bit_pos <<= 1;
     } else if(bit_cnt == 9) { // End Data
       // Output STOP Bit
@@ -57,14 +50,14 @@ void uart_puts(uint8_t *buf) {
     uart_putc(*buf++);
 }
 
-uint8_t uart_getc(void) {
+char uart_getc(void) {
+  uint8_t bit_cnt = 0;
+  uint8_t bit_pos = 0x01;
+  char    c       = 0;
+
   // Wait START Bit
   while(RXPIN)
     ;
-
-  bit_cnt = 0;
-  data  = 0;
-  bit_pos = 0x01;
 
   // Initialize TMR2
   TMR2 = 0;
@@ -102,7 +95,7 @@ uint8_t uart_getc(void) {
         break;
       default: // Process 1-8bit Data
         if(RXPIN)
-          data |= bit_pos;
+          c |= bit_pos;
         bit_pos <<= 1;
         bit_cnt++;
     }
@@ -110,7 +103,7 @@ uint8_t uart_getc(void) {
 
   if(bit_cnt == 10) {
     // Return Valid Data
-    return data;
+    return c;
   } else {
     // Return Error Flag
     return 0xFF;

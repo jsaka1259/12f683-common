@@ -1,14 +1,12 @@
 #include "utils.h"
 
-uint16_t itostring(uint8_t digit, uint8_t* buf) {
-    uint8_t i = digit;
-    uint16_t data = 0;
-    
-    buf += digit;
-    for(; i > 0; i--) {
-        buf--;
-        *buf = (data % 10) + '0';
-        data = data / 10;
-    }
-    return data;
+char *itos(char *buf, uint16_t val, uint8_t dig, char pad) {
+  char *str = buf;
+  str += dig;
+  for (; dig > 0; dig--) {
+    str--;
+    *str = (val == 0) ? pad : "0123456789"[val % 10];
+    val /= 10;
+  }
+  return str;
 }
