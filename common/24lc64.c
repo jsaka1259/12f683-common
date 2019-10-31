@@ -1,4 +1,4 @@
-#include "common.h"
+#include "24lc64.h"
 
 void 24lc64_i2c_write(uint16_t addr, uint8_t data) {
   i2c_start();

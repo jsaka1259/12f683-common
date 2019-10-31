@@ -1,21 +1,16 @@
-#include "common.h"
+#include "st7032i.h"
 
 void st7032i_init(void) {
   delay_100ms(1);
-
   // 8bit 2line Noraml mode
   st7032i_cmd(0x38);
-
   // 8bit 2line Extend mode
   st7032i_cmd(0x39);
-
   // OSC 183Hz BIAS 1/5
   st7032i_cmd(0x14);
-
   // CONTRAST
   st7032i_cmd(0x70 + (ST7032I_CONTRAST & 0x0F));
   st7032i_cmd(0x5C + (ST7032I_CONTRAST >> 4));
-
 #if VDD_5V
   // Follower for 5V
   st7032i_cmd(0x6A);
@@ -23,15 +18,11 @@ void st7032i_init(void) {
   // Follower for 3.3V
   st7032i_cmd(0x6B);
 #endif
-
   delay_100ms(3);
-
   // Set Normal mode
   st7032i_cmd(0x38);
-
   // Display On
   st7032i_cmd(0x0C);
-
   // Clear Display
   st7032i_cmd(0x01);
 }

@@ -1,4 +1,4 @@
-#include "common.h"
+#include "spi.h"
 
 void spi_start(void) {
   CS = 0;
