@@ -7,10 +7,8 @@ static volatile uint8_t bit_pos;
 void uart_init(void) {
   // 1/4 Pre, 1/1 Post
   T2CON = 0x01;
-
   // Clear Interrupt Flag
   TMR2IF = 0;
-
   TXPIN  = 1;
 }
 
@@ -19,18 +17,14 @@ void uart_putc(uint8_t code) {
 
   // Initialize Bit Counter
   bit_cnt = 0;
-
   bit_pos = 0x01;
 
   // Set Baudrate
   PR2 = BAUD;
-
   // Output START Bit
   TXPIN = 0;
-
   // Initialize TMR2
   TMR2 = 0;
-
   // 1/4 Pre, 1/1 Post
   T2CON = 0x05;
 
@@ -48,16 +42,10 @@ void uart_putc(uint8_t code) {
       // Output Data Bit
       TXPIN = (data & bit_pos) ? 1: 0;
       bit_pos <<= 1;
-    }
-
-    // End Data
-    if(bit_cnt == 9) {
+    } else if(bit_cnt == 9) { // End Data
       // Output STOP Bit
       TXPIN = 1;
-    }
-
-    // End STOP Bit
-    if(bit_cnt == 10) {
+    } else if(bit_cnt == 10) { // End STOP Bit
       // Stop TMR2
       T2CON = 0x01;
     }
@@ -80,13 +68,10 @@ uint8_t uart_getc(void) {
 
   // Initialize TMR2
   TMR2 = 0;
-
   // Set 1/2 Bit Width
   PR2  = DTIME;
-
   // Defeat TMR2 Interrupt Flag
   TMR2IF = 0;
-
   // 1/4 Pre, 1/1 Post
   T2CON  = 0x05;
 
@@ -99,9 +84,7 @@ uint8_t uart_getc(void) {
     TMR2IF = 0;
 
     switch(bit_cnt) {
-      case 0:
-        // Process START Bit
-
+      case 0: // Process START Bit
         if(RXPIN)
           bit_cnt = 0xFF;
         else {
@@ -109,23 +92,17 @@ uint8_t uart_getc(void) {
           bit_cnt++;
         }
         break;
-      case 9:
-        // Process STOP Bit
-
+      case 9: // Process STOP Bit
         if(RXPIN)
           bit_cnt++;
         else
           bit_cnt = 0xFF;
-
         // Stop TMR2
         T2CON = 0x01;
         break;
-      default:
-        // Process 1-8bit Data
-
+      default: // Process 1-8bit Data
         if(RXPIN)
           data |= bit_pos;
-
         bit_pos <<= 1;
         bit_cnt++;
     }

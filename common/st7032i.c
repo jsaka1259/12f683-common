@@ -11,7 +11,7 @@ void st7032i_init(void) {
   // CONTRAST
   st7032i_cmd(0x70 + (ST7032I_CONTRAST & 0x0F));
   st7032i_cmd(0x5C + (ST7032I_CONTRAST >> 4));
-#if VDD_5V
+#ifdef VDD_5V
   // Follower for 5V
   st7032i_cmd(0x6A);
 #else
@@ -30,19 +30,14 @@ void st7032i_init(void) {
 void st7032i_cmd(uint8_t cmd) {
   // I2C Start Condition
   i2c_start();
-
   // ST7032I Device Address
   i2c_write(ST7032I_I2C_ADDR);
-
   // Set Command Mode
   i2c_write(0x00);
-
   // Output Command
   i2c_write(cmd);
-
   // I2C Stop Condition
   i2c_stop();
-
   /* Clear or Home */
   if((cmd == 0x01) || (cmd == 0x02))
     __delay_us(2);
@@ -53,19 +48,14 @@ void st7032i_cmd(uint8_t cmd) {
 void st7032i_putc(const uint8_t data) {
   // I2C Start Condition
   i2c_start();
-
   // ST7032I Device Address
   i2c_write(ST7032I_I2C_ADDR);
-
   // Set Data Mode
   i2c_write(0x40);
-
   // Output Data
   i2c_write(data);
-
   // I2C Stop Condition
   i2c_stop();
-
   __delay_us(30);
 }
 
