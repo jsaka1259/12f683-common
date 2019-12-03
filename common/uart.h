@@ -19,6 +19,6 @@
 extern void uart_init(void);
 extern void uart_putc(char c);
 extern void uart_puts(char *buf);
-extern uint8_t uart_getc(void);
+extern char uart_getc(void);
 
 #endif
