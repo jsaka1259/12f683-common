@@ -4,6 +4,8 @@
 #include <xc.h>
 #include <stdint.h>
 
+#include "common.h"
+
 // Detect Delay Time
 #define DTIME 10
 
