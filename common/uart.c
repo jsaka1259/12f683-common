@@ -45,7 +45,7 @@ void uart_putc(char c) {
   }
 }
 
-void uart_puts(uint8_t *buf) {
+void uart_puts(char *buf) {
   while(*buf)
     uart_putc(*buf++);
 }
