@@ -4,7 +4,7 @@
 #include <xc.h>
 #include <stdint.h>
 
-#include "common.h"
+#include "xtal.h"
 
 // Detect Delay Time
 #define DTIME 10
@@ -13,12 +13,12 @@
 #define BAUDRATE 9600
 #define BAUD     (uint8_t)(((_XTAL_FREQ / BAUDRATE) / 16) - 1)
 
-#define TXPIN GP4
-#define RXPIN GP5
+#define TXPIN GP1
+#define RXPIN GP0
 
 extern void uart_init(void);
-extern void uart_putc(char c);
-extern void uart_puts(char *buf);
+extern void uart_putc(const char data);
+extern void uart_puts(const char *buf);
 extern char uart_getc(void);
 
 #endif

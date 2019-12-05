@@ -3,8 +3,10 @@
 
 #include <xc.h>
 
+#include "i2c.h"
+
 // 24LC64 I2C Address
-#define 24LC64_I2C_ADDR 0x50
+#define 24LC64_I2C_ADDR 0x50 << 1
 // 24LC64 CAPACITY
 #define 24LC64_ADDR_MAX 0xFFFF
 // 24LC64 Data Width

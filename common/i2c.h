@@ -4,7 +4,7 @@
 #include <xc.h>
 #include <stdint.h>
 
-#include "common.h"
+#include "xtal.h"
 
 #define SDA     GP5
 #define SCL     GP4

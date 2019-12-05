@@ -8,7 +8,7 @@ void uart_init(void) {
   TXPIN  = 1;
 }
 
-void uart_putc(char c) {
+void uart_putc(const char data) {
   uint8_t bit_cnt = 0;
   uint8_t bit_pos = 0x01;
 
@@ -33,7 +33,7 @@ void uart_putc(char c) {
     // 1-8bit
     if(bit_cnt > 0 && bit_cnt < 9) {
       // Output Data Bit
-      TXPIN = (c & bit_pos) ? 1 : 0;
+      TXPIN = (data & bit_pos) ? 1 : 0;
       bit_pos <<= 1;
     } else if(bit_cnt == 9) { // End Data
       // Output STOP Bit
@@ -45,7 +45,7 @@ void uart_putc(char c) {
   }
 }
 
-void uart_puts(char *buf) {
+void uart_puts(const char *buf) {
   while(*buf)
     uart_putc(*buf++);
 }
@@ -53,7 +53,7 @@ void uart_puts(char *buf) {
 char uart_getc(void) {
   uint8_t bit_cnt = 0;
   uint8_t bit_pos = 0x01;
-  char    c       = 0;
+  uint8_t data    = 0;
 
   // Wait START Bit
   while(RXPIN)
@@ -95,7 +95,7 @@ char uart_getc(void) {
         break;
       default: // Process 1-8bit Data
         if(RXPIN)
-          c |= bit_pos;
+          data |= bit_pos;
         bit_pos <<= 1;
         bit_cnt++;
     }
@@ -103,7 +103,7 @@ char uart_getc(void) {
 
   if(bit_cnt == 10) {
     // Return Valid Data
-    return c;
+    return data;
   } else {
     // Return Error Flag
     return 0xFF;

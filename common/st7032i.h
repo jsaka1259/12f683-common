@@ -4,13 +4,14 @@
 #include <xc.h>
 #include <stdint.h>
 
-#include "common.h"
+#include "i2c.h"
 #include "utils.h"
+#include "xtal.h"
 
 #define VDD_5V
 
 // ST7032I I2C Address
-#define ST7032I_I2C_ADDR 0x7C
+#define ST7032I_I2C_ADDR 0x3E << 1
 
 #ifdef VDD_5V
 // for 5V
