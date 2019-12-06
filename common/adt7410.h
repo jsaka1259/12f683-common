@@ -9,6 +9,6 @@
 #define ADT7410_I2C_ADDR 0x48 << 1
 
 extern void adt7410_init(uint8_t mode);
-extern int16_t adt7410_read(uint8_t one_shot);
+extern int16_t adt7410_read(uint8_t mode);
 
 #endif

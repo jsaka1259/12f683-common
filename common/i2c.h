@@ -6,10 +6,11 @@
 
 #include "xtal.h"
 
-#define SDA     GP5
-#define SCL     GP4
-#define TRISSDA TRISIO5
+#define SDA     GP4
+#define SCL     GP5
+#define TRISSDA TRISIO4
 
+extern void i2c_init(void);
 extern void i2c_start(void);
 extern void i2c_stop(void);
 extern uint8_t i2c_write(uint8_t data);
