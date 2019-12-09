@@ -8,7 +8,7 @@ char *itos(char *buf, uint32_t val, uint8_t rad, int8_t dig, char pad) {
 
   if (rad == 10 && val & 0x8000) {
     minus = 1;
-    val = minus ? -val : val;
+    val = -val;
   }
 
   buf[dig] = 0;
