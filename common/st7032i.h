@@ -11,7 +11,7 @@
 #define VDD_5V
 
 // ST7032I I2C Address
-#define ST7032I_I2C_ADDR 0x3E << 1
+#define ST7032I_I2C_ADDR 0x3e << 1
 
 #ifdef VDD_5V
 // for 5V

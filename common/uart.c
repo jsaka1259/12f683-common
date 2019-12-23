@@ -79,7 +79,7 @@ char uart_getc(void) {
     switch(bit_cnt) {
       case 0: // Process START Bit
         if(RXPIN)
-          bit_cnt = 0xFF;
+          bit_cnt = 0xff;
         else {
           PR2 = BAUD;
           bit_cnt++;
@@ -89,7 +89,7 @@ char uart_getc(void) {
         if(RXPIN)
           bit_cnt++;
         else
-          bit_cnt = 0xFF;
+          bit_cnt = 0xff;
         // Stop TMR2
         T2CON = 0x01;
         break;
@@ -106,6 +106,6 @@ char uart_getc(void) {
     return data;
   } else {
     // Return Error Flag
-    return 0xFF;
+    return 0xff;
   }
 }

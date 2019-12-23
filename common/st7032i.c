@@ -36,20 +36,20 @@ void st7032i_init(void) {
   // OSC 183Hz BIAS 1/5
   st7032i_cmd(0x14);
   // CONTRAST
-  st7032i_cmd(0x70 + (ST7032I_CONTRAST & 0x0F));
-  st7032i_cmd(0x5C + (ST7032I_CONTRAST >> 4));
+  st7032i_cmd(0x70 + (ST7032I_CONTRAST & 0x0f));
+  st7032i_cmd(0x5c + (ST7032I_CONTRAST >> 4));
 #ifdef VDD_5V
   // Follower for 5V
-  st7032i_cmd(0x6A);
+  st7032i_cmd(0x6a);
 #else
   // Follower for 3.3V
-  st7032i_cmd(0x6C);
+  st7032i_cmd(0x6c);
 #endif
   delay_100ms(3);
   // Set Normal mode
   st7032i_cmd(0x38);
   // Display On
-  st7032i_cmd(0x0C);
+  st7032i_cmd(0x0c);
   // Clear Display
   st7032i_cmd(0x01);
 }
