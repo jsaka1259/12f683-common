@@ -45,9 +45,10 @@ void uart_putc(const char data) {
   }
 }
 
-void uart_puts(const char *buf) {
-  while(*buf)
-    uart_putc(*buf++);
+uint8_t uart_puts(const char *buf) {
+  uint8_t len = 0;
+  while(buf[len])
+    uart_putc(buf[len++]);
 }
 
 char uart_getc(void) {

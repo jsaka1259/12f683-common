@@ -2,7 +2,6 @@
 
 void adt7410_init(uint8_t mode) {
   uint8_t mval;
-  mval = 0x00 | 0x80;
 
   switch (mode) {
     case 0:
@@ -15,6 +14,7 @@ void adt7410_init(uint8_t mode) {
       mval = 0x60;
       break;
     default:
+      mval = 0x00 | 0x80;
       break;
   }
 
@@ -26,7 +26,7 @@ void adt7410_init(uint8_t mode) {
 }
 
 int16_t adt7410_read(uint8_t mode) {
-  uint16_t val;
+  uint16_t val = 0;
 
   if (mode == 1) {
     i2c_start();

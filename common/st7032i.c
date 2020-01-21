@@ -1,14 +1,5 @@
 #include "st7032i.h"
 
-static void delay_100ms(uint16_t time) {
-  time *= 4;
-
-  while(time) {
-    __delay_ms(25);
-    time--;
-  }
-}
-
 void st7032i_cmd(uint8_t cmd) {
   // I2C Start Condition
   i2c_start();
@@ -28,7 +19,7 @@ void st7032i_cmd(uint8_t cmd) {
 }
 
 void st7032i_init(void) {
-  delay_100ms(1);
+  __delay_ms(100);
   // 8bit 2line Noraml mode
   st7032i_cmd(0x38);
   // 8bit 2line Extend mode
@@ -45,11 +36,16 @@ void st7032i_init(void) {
   // Follower for 3.3V
   st7032i_cmd(0x6c);
 #endif
-  delay_100ms(3);
+  __delay_ms(300);
   // Set Normal mode
   st7032i_cmd(0x38);
   // Display On
   st7032i_cmd(0x0c);
+  // Clear Display
+  st7032i_cmd(0x01);
+}
+
+void st7032i_clear(void) {
   // Clear Display
   st7032i_cmd(0x01);
 }
@@ -73,9 +69,4 @@ void st7032i_puts(const char *buf) {
 
   while(buf[i] != 0x00)
     st7032i_putc(buf[i++]);
-}
-
-void st7032i_clear(void) {
-  // Clear Display
-  st7032i_cmd(0x01);
 }

@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 #include "i2c.h"
-#include "utils.h"
 #include "xtal.h"
 
 #define VDD_5V
@@ -23,8 +22,8 @@
 
 extern void st7032i_cmd(uint8_t cmd);
 extern void st7032i_init(void);
+extern void st7032i_clear(void);
 extern void st7032i_putc(const char c);
 extern void st7032i_puts(const char *buf);
-extern void st7032i_clear(void);
 
 #endif
